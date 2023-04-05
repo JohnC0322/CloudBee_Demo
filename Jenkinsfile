@@ -12,14 +12,20 @@ pipeline {
                 }
             }
         }
-
-        stage('Build') { 
-            steps { 
-                script{
-                 app = docker.build("underwater")
-                }
-            }
+    stage('Docker Build') {
+      steps {
+        withEnv(['DOCKER_BUILDKIT=0']){
+        sh 'echo $DOCKER_BUILDKIT'
+        sh 'echo "$image_name":"$tag"'
+        sh 'docker build . -t "$image_name":"$tag"'
         }
+      }
+    }
+    stage('Push Docker Image'){
+        steps{
+            sh 'docker push "$image_name":"$tag"'
+        }
+    }
         stage('Test'){
             steps {
                  echo 'Empty'
@@ -27,13 +33,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script{
-#                       docker.withRegistry('https://720766170633.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:aws-credentials') {
-#                    app.push("${env.BUILD_NUMBER}")
-#                    app.push("latest")
-                    }
+                 echo 'Empty'
                 }
             }
-        }
     }
 }
+
