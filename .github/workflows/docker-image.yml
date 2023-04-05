@@ -15,4 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag base-ubuntu:$(date +%s)
+    - name: Login to JFrog
+      with:
+        registry: hchiao1.jfrog.io
+        username: ${{ secrets.JFROG_USER_WRITER }}
+        password: ${{ secrets.JFROG_PASSWORD_WRITER }}
