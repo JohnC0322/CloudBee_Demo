@@ -26,9 +26,5 @@ jobs:
       with:
         push: true
         tags: hchiao1.jfrog.io/docker/base-ubuntu:latest
-    - name: create pull request
-      uses: peter-evans/create-pull-request@v3
-      with: 
-        title: Automatic PR Create
 
     
