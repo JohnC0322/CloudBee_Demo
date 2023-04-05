@@ -7,9 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +26,11 @@ jobs:
       with:
         push: true
         tags: hchiao1.jfrog.io/docker/base-ubuntu:latest
+        
+    steps:
+    - name: create pull request
+      run: gh pr create -B base_branch -H branch_to_merge --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    
